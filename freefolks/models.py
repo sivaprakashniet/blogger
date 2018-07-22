@@ -26,30 +26,30 @@ class DynamicOption(models.Model):
 	def __unicode__(self):
 		return self.description
 
-# class Account(BaseModel):
-# 	objects = ModelManager()
-# 	BANKS = [(t.value, t.description) for t in DynamicOption.objects.filter(field_name="bank")]
-# 	user_name = models.CharField(max_length=50,null=False, verbose_name="User name")
-# 	bank_name = models.CharField(max_length=50,null=False, choices=BANKS, verbose_name="Select your bank")
-# 	branch = models.CharField(max_length=200,null=False, verbose_name="Branch name")
-# 	account_number = models.CharField(max_length=200,null=True, blank=True, verbose_name="Account number")
-# 	access_user = models.ForeignKey(User)
+class Account(BaseModel):
+	objects = ModelManager()
+	BANKS = [(t.value, t.description) for t in DynamicOption.objects.filter(field_name="bank")]
+	user_name = models.CharField(max_length=50,null=False, verbose_name="User name")
+	bank_name = models.CharField(max_length=50,null=False, choices=BANKS, verbose_name="Select your bank")
+	branch = models.CharField(max_length=200,null=False, verbose_name="Branch name")
+	account_number = models.CharField(max_length=200,null=True, blank=True, verbose_name="Account number")
+	access_user = models.ForeignKey(User)
 
-# 	def __unicode__(self):
-# 		return self.user_name
+	def __unicode__(self):
+		return self.user_name
 
-# class Transaction(BaseModel):
-# 	objects = ModelManager()
-# 	TRANSACTION_TYPE = [(t.value, t.description) for t in DynamicOption.objects.filter(field_name="transaction_type")]
-# 	title = models.CharField(max_length=50, null=False, verbose_name="Title")
-# 	account = models.ForeignKey(Account, null=False)
-# 	transaction_type = models.CharField(max_length=50, choices=TRANSACTION_TYPE, null=False, verbose_name="Transaction type")
-# 	amount = models.DecimalField(default=0.0, null=False, decimal_places=2, max_digits=12, verbose_name="Transaction amount")
-# 	date_time = models.DateTimeField(auto_now_add=False, blank=True, null=True, verbose_name="Transaction date")
-# 	access_user = models.ForeignKey(User)
+class Transaction(BaseModel):
+	objects = ModelManager()
+	TRANSACTION_TYPE = [(t.value, t.description) for t in DynamicOption.objects.filter(field_name="transaction_type")]
+	title = models.CharField(max_length=50, null=False, verbose_name="Title")
+	account = models.ForeignKey(Account, null=False)
+	transaction_type = models.CharField(max_length=50, choices=TRANSACTION_TYPE, null=False, verbose_name="Transaction type")
+	amount = models.DecimalField(default=0.0, null=False, decimal_places=2, max_digits=12, verbose_name="Transaction amount")
+	date_time = models.DateTimeField(auto_now_add=False, blank=True, null=True, verbose_name="Transaction date")
+	access_user = models.ForeignKey(User)
 
-# 	def __unicode__(self):
-# 		return self.title
+	def __unicode__(self):
+		return self.title
 
 class Vendor(BaseModel):
 	objects = ModelManager()
