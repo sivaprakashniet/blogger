@@ -1,0 +1,90 @@
+{% extends "_layouts/base.html" %}
+{% load addcss %}
+{% block css %}
+{{block.super}}
+{% endblock css %}
+{% block body_class %}skin-blue{% endblock %}
+{% block page_title %}FreeFolks - Home{% endblock %}
+{% block page_class %}home-page{% endblock %}
+{% block content %}
+    <section class="content-header">
+      <h1>
+        Update your blog
+        <small>:)</small>
+        &nbsp;
+        <a href="{% url 'blogs' %}" class="btn btn-sm btn-success">Blogs!</a>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{% url 'blogs' %}">Blogs</a></li>
+        <li class="active">Update Blog</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <form role="form" method="post" action="{% url 'update_blog' slug%}">
+        <div class="box">
+          <div class="box-body">
+              {% if messages %}
+                <div class="container">
+                    {% for message in messages %}
+                        <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                    {% endfor %}
+                </div>    
+              {% endif %}
+              {% csrf_token %}
+                <div class="box-body">
+                  <div class="form-group {% if form.title.errors %} has-error {% endif %}">
+                    <label>Title</label>
+                    {{ form.title|addcss:'form-control' }}
+                    {% if form.title.errors %}
+                    <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> 
+                      {% for error in form.title.errors %}
+                          {{ error|escape }}
+                      {% endfor %}
+                    </label>
+                    {% endif %}
+                  </div>
+                  <div class="form-group {% if form.clue_type.errors %} has-error {% endif %}">
+                    <label>Category</label>
+                    {{ form.clue_type|addcss:'form-control' }}
+                    {% if form.clue_type.errors %}
+                    <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> 
+                      {% for error in form.clue_type.errors %}
+                          {{ error|escape }}
+                      {% endfor %}
+                    </label>
+                    {% endif %}
+                  </div>
+                  <div class="form-group {% if form.short.errors %} has-error {% endif %}">
+                    <label>Short Story</label>
+                    {{ form.short|addcss:'form-control' }}
+                    {% if form.short.errors %}
+                    <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> 
+                      {% for error in form.short.errors %}
+                          {{ error|escape }}
+                      {% endfor %}
+                    </label>
+                    {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <label>Clue</label>
+                    {{ form.content|addcss:'form-control htmlEditor' }}
+                  </div>
+                </div>
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+             <a href="{% url 'blogs' %}" class="btn btn-warning">Cancel</a>
+          </div>
+          <!-- /.box-footer-->
+        </div>
+      </form>
+      <!-- /.box -->
+
+    </section>
+{% endblock %}

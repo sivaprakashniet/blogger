@@ -1,0 +1,67 @@
+{% extends "_layouts/base.html" %}
+
+{% block css %}
+{{block.super}}
+{% endblock css %}
+{% block body_class %}skin-blue{% endblock %}
+{% block page_title %}FreeFolks - Home{% endblock %}
+{% block page_class %}home-page{% endblock %}
+{% block content %}
+ <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Blogs
+        <small>:)</small>
+        &nbsp;
+        <a href="{% url 'create_blog' %}" class="btn btn-sm btn-success">Start building your blog!</a>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Blogs</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+            {% endfor %}
+        </div>    
+      {% endif %}
+      {% for blog in blogs %}
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title"><a href="{% url 'view_blog' blog.slug %}">{{ blog.title }}</a></h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                    title="Collapse">
+              <i class="fa fa-minus"></i></button>
+              <a href="{% url 'view_blog' blog.slug %}"><i class="fa fa-eye"></i></a>
+          </div>
+        </div>
+        <div class="box-body">
+            {{ blog.short }}
+        </div>
+        <!-- <div class="box-body fr-view">
+            {{ blog.content }}
+            <a href="{{ url_for_full_content }}">read more</a>
+        </div> -->
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <div class="">Created by <span class="text-capitalize title">{{ blog.created_by.username }}</span> on {{ blog.modified_date|date }} ({{ blog.modified_date|timesince }} ago)</div>
+          <div class="pull-right">
+
+          </div>
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+      {% endfor %}
+
+    </section>
+    <!-- /.content -->
+{% endblock %}

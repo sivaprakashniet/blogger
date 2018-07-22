@@ -1,0 +1,111 @@
+{% extends "account/base.html" %}
+{% block body_class %}register-page{% endblock %}
+{% load i18n %}
+{% load account socialaccount %}
+{% load addcss %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+<div class="register-box">
+  <div class="register-logo">
+    <a href="/"><b>Free</b>Folkz</a>
+  </div>
+
+  <div class="register-box-body">
+
+  	{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-error">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-error">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}	
+    <p class="login-box-msg">Register a new membership</p>
+    <form action="{% url 'account_signup' %}" method="post">
+    	{% csrf_token %}
+      <div class="form-group  {% if form.username.errors %} has-error {% endif %}  has-feedback">
+      	{{ form.username |addcss:"form-control" }}
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        {% if form.username.errors %}
+        <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> 
+    			{% for error in form.username.errors %}
+    			    {{ error|escape }}
+    			{% endfor %}
+		    </label>
+        {% endif %} 
+      </div>
+
+      <div class="form-group {% if form.email.errors %} has-error {% endif %} has-feedback">
+        {{ form.email |addcss:"form-control" }}
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        {% if form.email.errors %}
+        <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> 
+			{% for error in form.email.errors %}
+			    {{ error|escape }}
+			{% endfor %}
+		</label>
+        {% endif %} 
+      </div>
+      <div class="form-group {% if form.password1.errors %} has-error {% endif %} has-feedback">
+        {{ form.password1 |addcss:"form-control" }}
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        {% if form.password1.errors %}
+        <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> 
+			{% for error in form.password1.errors %}
+			    {{ error|escape }}
+			{% endfor %}
+		</label>
+        {% endif %}
+      </div>
+      <div class="form-group {% if form.password2.errors %} has-error {% endif %} has-feedback">
+        {{ form.password2 |addcss:"form-control" }}
+        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        {% if form.password2.errors %}
+        <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> 
+			{% for error in form.password2.errors %}
+			    {{ error|escape }}
+			{% endfor %}
+		</label>
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="checkbox">
+            <label>
+              <input required type="checkbox"> I agree to the <a href="#">terms</a>
+            </label>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+
+    <div class="social-auth-links text-center">
+      <p>- OR -</p>
+      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat disabled"><i class="fa fa-facebook"></i> Sign up using
+        Facebook</a>
+      <a href="#" class="btn btn-block btn-social btn-google btn-flat disabled"><i class="fa fa-google-plus"></i> Sign up using
+        Google+</a>
+    </div>
+
+    <a href="{% url 'account_login' %}" class="text-center">I already have a membership</a>
+  </div>
+  <!-- /.form-box -->
+</div>
+{% endblock %}
+
+
+
+
