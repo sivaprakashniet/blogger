@@ -14,7 +14,7 @@
 {% block page_title %}FreeFolks - Home{% endblock %}
 {% block page_class %}home-page{% endblock %}
 {% block content %}
-{% if not request.user.is_superuser %}
+{% if request.user.is_superuser %}
  <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
