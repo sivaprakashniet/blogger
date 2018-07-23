@@ -41,12 +41,14 @@
                     title="Collapse">
               <i class="fa fa-minus"></i>
             </button> -->
+            {% if request.user == blog.created_by %}
             <a class="btn btn-box-tool" href="{% url 'update_blog' blog.slug %}">  <i class="fa fa-edit"></i> </a>
             
             <button type="submit" class="btn btn-box-tool" data-widget="delete" data-toggle="tooltip"
                     title="Delete">
               <i class="fa fa-remove"></i>
             </button>
+            {% endif %}
           
           </div>
           </form>
